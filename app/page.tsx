@@ -71,11 +71,28 @@ export default function Home() {
       const lightsMesh = new THREE.Mesh(earth, lightsMat);
       earthGroup.add(lightsMesh);
 
+
+      const moon = new SphereGeometry(0.3, 64, 64);
+      const moonMaterial = new THREE.MeshBasicMaterial({
+        color: 0xffffff,
+      });
+      const moonMesh = new Mesh(moon, moonMaterial);
+      moonMesh.position.x = 3;
+
+      // scene.add(moonMesh);
+
+      earthGroup.add(moonMesh);
+
       const renderScene = (t = 0) => {
         requestAnimationFrame(renderScene);
         earthGroup.position.x = Math.sin(t / 1000) * 10;
         earthGroup.position.y = Math.cos(t / 1000) * 10;
         earthGroup.rotation.y = t / 1000;
+
+        moonMesh.position.x = Math.sin((t / 1000) * 5) * 2;
+        moonMesh.position.y = Math.cos((t / 1000) * 5) * 2;
+        moonMesh.rotation.y = (t / 1000) * 30;
+
         renderer.render(scene, camera);
         controls.update();
       };
